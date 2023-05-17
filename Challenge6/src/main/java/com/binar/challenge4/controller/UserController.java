@@ -3,41 +3,33 @@ package com.binar.challenge4.controller;
 import com.binar.challenge4.model.User;
 import com.binar.challenge4.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/user")
 public class UserController {
     @Autowired
     private UserService userService;
-    /*@Autowired
 
-    private ModelMapper modelMapper;
-
-    @PostMapping("/register")
-    public ResponseEntity<ResponseData<User>> register(@RequestBody UserData userData){
-
-        ResponseData<User> response = new ResponseData<>();
-        User user = modelMapper.map(userData, User.class);
-        response.setPayload(userService.registerUser(user));
-        response.setStatus(true);
-        response.getMassage().add("User Save!");
-        return ResponseEntity.ok(response);
-    }*/
-
-    @PostMapping("/register")
+    /*@PostMapping("/register")
     public User register(@RequestBody User user) {
         return userService.registerUser(user);
-    }
+    }*/
 
-    @GetMapping("/getAllUser")
+    /*@GetMapping("/getAllUser")
     public List<User> getAllUser(){
         return userService.getAllUser();
-    }
+    }*/
 
-    /*@PostMapping("/addUser")
+    @PostMapping("/addUser")
+    @PreAuthorize("hasAuthority('CUSTOMER')")
     public ResponseEntity<User> createUser(@RequestBody User user) {
         try {
             User user1 = userService.addUser(user);
@@ -47,13 +39,14 @@ public class UserController {
         }
     }
 
+    @PreAuthorize("hasAuthority('CUSTOMER')")
     @GetMapping("/getAllUser")
     public List<User> getAllUser(){
         return userService.getAllUser();
     }
 
     @GetMapping("/getAllUserPagination")
-    public Page<User> getAllUsersPagination(@RequestParam(defaultValue = "0") int page,@RequestParam(defaultValue = "10") int size) {
+    public Page<User> getAllUsersPagination(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
         return userService.getAllUsersPagination(page, size);
     }
 
@@ -77,5 +70,5 @@ public class UserController {
     public ResponseEntity<String> deleteUserById(@RequestParam(name = "userId") Long id) {
         userService.deleteUser(id);
         return ResponseEntity.ok("Data Berhasil dihapus");
-    }*/
+    }
 }

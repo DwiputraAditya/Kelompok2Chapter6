@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,12 +18,14 @@ public class FilmController {
     @Autowired
     private FilmService filmService;
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("/addFilm")
     public ResponseEntity<Film> addFilm(@RequestBody Film film) {
         Film film1 = filmService.addFilm(film);
         return new ResponseEntity<>(film1, HttpStatus.CREATED);
     }
 
+    @PreAuthorize("hasAuthority('CUSTOMER')")
     @GetMapping("/getAllFilm")
     public ResponseEntity<List<Film>> getAllFilm() {
         List<Film> allFilm = filmService.getAllFilm();

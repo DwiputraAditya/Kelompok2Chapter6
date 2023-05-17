@@ -1,15 +1,21 @@
 package com.binar.challenge4.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
-import java.util.Collections;
+import java.util.List;
 
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "users")
 public class User implements UserDetails {
@@ -17,11 +23,8 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
-    @Column(length = 50, nullable = false)
     private String username;
-    @Column(length = 120, nullable = false, unique = true)
     private String email;
-    @Column(length = 150, nullable = false)
     private String password;
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
@@ -29,8 +32,7 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(userRole.name());
-        return Collections.singletonList(authority);
+        return List.of(new SimpleGrantedAuthority(userRole.name()));
     }
 
     @Override
@@ -62,15 +64,4 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
-
-    /*@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userId;
-    private String username;
-    private String email;
-    private String password;*/
-//
-//    @OneToMany(mappedBy = "user")
-//    @JsonIgnore
-//    private List<Invoice> invoice = new LinkedList<>();
 }
