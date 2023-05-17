@@ -1,7 +1,8 @@
-package com.binar.challenge4.service;
+package com.binar.challenge4.Security;
 
 import com.binar.challenge4.JWT.AuthEntryPointJwt;
 import com.binar.challenge4.JWT.AuthTokenFilter;
+import com.binar.challenge4.service.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -85,6 +86,11 @@ public class WebSecurityConfig { // extends WebSecurityConfigurerAdapter {
                 .authorizeRequests().antMatchers("/api/auth/**").permitAll()
                 .antMatchers("/api/test/**").permitAll()
                 .antMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
+                .antMatchers("/api/film/**").permitAll()
+                .antMatchers("/api/booking/**").permitAll()
+                .antMatchers("/api/schedule/**").permitAll()
+                .antMatchers("/api/seats/**").permitAll()
+                .antMatchers("/api/user/**").permitAll()
                 .anyRequest().authenticated();
 
         http.authenticationProvider(authenticationProvider());
@@ -93,4 +99,6 @@ public class WebSecurityConfig { // extends WebSecurityConfigurerAdapter {
 
         return http.build();
     }
+
+
 }
