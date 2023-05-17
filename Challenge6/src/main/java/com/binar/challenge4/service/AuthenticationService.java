@@ -31,12 +31,27 @@ public class AuthenticationService {
     @Autowired
     private AuthenticationManager authenticationManager;
 
-    public ResponseEntity<String> register(RegisterDTO registerDTO) {
+    public ResponseEntity<String> registerAdmin(RegisterDTO registerDTO) {
         var user = User.builder()
                 .username(registerDTO.getUsername())
                 .email(registerDTO.getEmail())
                 .password(passwordEncoder.encode(registerDTO.getPassword()))
                 .userRole(UserRole.ADMIN)
+                .build();
+        userRepository.save(user);
+        return ResponseEntity.ok("Berhasil Registrasi");
+        /*var jwtToken = jwtService.generateToken(user);
+        return AuthenticatioinResponse.builder()
+                .token(jwtToken)
+                .build();*/
+    }
+
+    public ResponseEntity<String> registerCustomer(RegisterDTO registerDTO) {
+        var user = User.builder()
+                .username(registerDTO.getUsername())
+                .email(registerDTO.getEmail())
+                .password(passwordEncoder.encode(registerDTO.getPassword()))
+                .userRole(UserRole.CUSTOMER)
                 .build();
         userRepository.save(user);
         return ResponseEntity.ok("Berhasil Registrasi");

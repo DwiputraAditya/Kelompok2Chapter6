@@ -19,9 +19,14 @@ public class AuthenticationController {
     @Autowired
     private AuthenticationService authService;
 
-    @PostMapping("/register")
-    public ResponseEntity<ResponseEntity<String>> register(@RequestBody RegisterDTO registerDTO){
-        return ResponseEntity.ok(authService.register(registerDTO));
+    @PostMapping("/registerAdmin")
+    public ResponseEntity<ResponseEntity<String>> registerAdmin(@RequestBody RegisterDTO registerDTO){
+        return ResponseEntity.ok(authService.registerAdmin(registerDTO));
+    }
+
+    @PostMapping("/registerCustomer")
+    public ResponseEntity<ResponseEntity<String>> registerCustomer(@RequestBody RegisterDTO registerDTO){
+        return ResponseEntity.ok(authService.registerCustomer(registerDTO));
     }
 
     @PostMapping("/authenticate")

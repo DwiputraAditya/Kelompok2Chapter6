@@ -12,20 +12,20 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/film")
+@RequestMapping("/api/film")
 public class FilmController {
     @Autowired
     private FilmService filmService;
 
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/addFilm")
     public ResponseEntity<Film> addFilm(@RequestBody Film film) {
         Film film1 = filmService.addFilm(film);
         return new ResponseEntity<>(film1, HttpStatus.CREATED);
     }
-
-    @PreAuthorize("hasAuthority('CUSTOMER')")
+    @PreAuthorize("hasRole('CUSTOMER')")
     @GetMapping("/getAllFilm")
     public ResponseEntity<List<Film>> getAllFilm() {
         List<Film> allFilm = filmService.getAllFilm();
