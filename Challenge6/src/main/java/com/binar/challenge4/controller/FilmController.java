@@ -18,14 +18,13 @@ import java.util.Optional;
 public class FilmController {
     @Autowired
     private FilmService filmService;
-
-    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/addFilm")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Film> addFilm(@RequestBody Film film) {
         Film film1 = filmService.addFilm(film);
         return new ResponseEntity<>(film1, HttpStatus.CREATED);
     }
-    @PreAuthorize("hasRole('CUSTOMER')")
+
     @GetMapping("/getAllFilm")
     public ResponseEntity<List<Film>> getAllFilm() {
         List<Film> allFilm = filmService.getAllFilm();
@@ -54,12 +53,14 @@ public class FilmController {
     }
 
     @PutMapping("/updateFilm")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<String> updateFilm(@RequestParam(name = "filmCode") Long id, @RequestBody Film film) {
         filmService.updateFilm(id, film);
         return new ResponseEntity<String>("Data berhasil di update", HttpStatus.OK);
     }
 
     @DeleteMapping("/deleteFilmById/{filmId}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<String> deleteFilmById(@RequestParam(name = "filmCode") Long id) {
         filmService.deleteFilmById(id);
         return ResponseEntity.ok("Data Berhasil dihapus");

@@ -12,38 +12,19 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/api/user")
 public class UserController {
     @Autowired
-    private UserService userService;
+    UserService userService;
 
-    /*@PostMapping("/register")
-    public User register(@RequestBody User user) {
-        return userService.registerUser(user);
-    }*/
 
-    /*@GetMapping("/getAllUser")
-    public List<User> getAllUser(){
-        return userService.getAllUser();
-    }*/
-
-    @PostMapping("/addUser")
-    @PreAuthorize("hasAuthority('CUSTOMER')")
-    public ResponseEntity<User> createUser(@RequestBody User user) {
-        try {
-            User user1 = userService.addUser(user);
-            return new ResponseEntity<>(user1, HttpStatus.CREATED);
-        } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    @PreAuthorize("hasAuthority('CUSTOMER')")
     @GetMapping("/getAllUser")
+    @PreAuthorize("hasRole('ADMIN')")
     public List<User> getAllUser(){
-        return userService.getAllUser();
-    }
+            return userService.getAllUser();
+        }
 
     @GetMapping("/getAllUserPagination")
     public Page<User> getAllUsersPagination(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
@@ -61,14 +42,17 @@ public class UserController {
     }
 
     @PutMapping("/updateUser")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<String> updateUser(@RequestParam(value = "userId") Long id, @RequestBody User user){
         userService.updateUser(id,user);
         return new ResponseEntity<>("Data berhasil di update", HttpStatus.OK);
     }
 
     @DeleteMapping("/deleteUserById/{userId}")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<String> deleteUserById(@RequestParam(name = "userId") Long id) {
         userService.deleteUser(id);
         return ResponseEntity.ok("Data Berhasil dihapus");
     }
 }
+
