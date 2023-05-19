@@ -26,7 +26,6 @@ public class FilmController {
     }
 
     @GetMapping("/getAllFilm")
-    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     public ResponseEntity<List<Film>> getAllFilm() {
         List<Film> allFilm = filmService.getAllFilm();
         return ResponseEntity.ok(allFilm);
@@ -50,7 +49,6 @@ public class FilmController {
     }
 
     @GetMapping("/getFilmByIsPremiered")
-    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     public ResponseEntity<List<Film>> getFilmByIsPremiered(@RequestParam(name = "isPremiered") Boolean isPremiered){
         List<Film> schedule = filmService.getScheduleByFilmIsPremiered(isPremiered);
         return ResponseEntity.ok(schedule);
