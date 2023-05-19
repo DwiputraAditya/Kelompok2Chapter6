@@ -26,17 +26,20 @@ public class FilmController {
     }
 
     @GetMapping("/getAllFilm")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     public ResponseEntity<List<Film>> getAllFilm() {
         List<Film> allFilm = filmService.getAllFilm();
         return ResponseEntity.ok(allFilm);
     }
 
     @GetMapping("/getAllFilmPagination")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     public Page<Film> getAllUsersPagination(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
         return filmService.getAllFilmPagination(page, size);
     }
 
     @GetMapping("/getFilmById/{filmId}")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     public ResponseEntity<Film> getFilmById(@RequestParam("filmCode") Long id) {
         Optional<Film> film = filmService.getFilmById(id);
         if (film.isPresent()) {
@@ -47,6 +50,7 @@ public class FilmController {
     }
 
     @GetMapping("/getFilmByIsPremiered")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     public ResponseEntity<List<Film>> getFilmByIsPremiered(@RequestParam(name = "isPremiered") Boolean isPremiered){
         List<Film> schedule = filmService.getScheduleByFilmIsPremiered(isPremiered);
         return ResponseEntity.ok(schedule);

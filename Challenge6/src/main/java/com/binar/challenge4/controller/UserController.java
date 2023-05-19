@@ -27,11 +27,13 @@ public class UserController {
         }
 
     @GetMapping("/getAllUserPagination")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     public Page<User> getAllUsersPagination(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
         return userService.getAllUsersPagination(page, size);
     }
 
     @GetMapping("/getUserById/{userId}")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     public ResponseEntity<User> getUserById(@PathVariable(value = "userId") Long id) {
         Optional<User> userData = userService.getUserById(id);
         if (userData.isPresent()) {

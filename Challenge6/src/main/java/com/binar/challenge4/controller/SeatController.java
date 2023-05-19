@@ -18,6 +18,7 @@ public class SeatController {
     SeatService seatService;
 
     @GetMapping("/getAllSeat")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     public ResponseEntity<List<Seat>> getAllSeat(){
         List<Seat> seats = seatService.getAllSeat();
         return ResponseEntity.ok(seats);

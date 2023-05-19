@@ -25,24 +25,28 @@ public class ScheduleController {
     }
 
     @GetMapping("/getScheduleByFilmCode")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     public ResponseEntity<List<Schedule>> getScheduleByFilmCode(@RequestParam(name = "filmCode") Long filmCode){
         List<Schedule> allSchedule = scheduleService.getScheduleByFilmCode(filmCode);
         return ResponseEntity.ok(allSchedule);
     }
 
     @GetMapping("/getScheduleByFilmName")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     public ResponseEntity<List<Schedule>> getScheduleByFilmCode(@RequestParam(name = "filmName") String filmName){
         List<Schedule> Schedule = scheduleService.getScheduleByFilmName(filmName);
         return ResponseEntity.ok(Schedule);
     }
 
     @GetMapping("/getScheduleByFilmIsPremiered")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     public ResponseEntity<List<Schedule>> getScheduleByFilmIsPremiered(@RequestParam(name = "isPremiered") Boolean isPremiered){
         List<Schedule> schedule = scheduleService.getScheduleByFilmIsPremiered(isPremiered);
         return ResponseEntity.ok(schedule);
     }
 
     @GetMapping("/getAllSchedule")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     public List<Schedule> getAllSchedule(){
         return scheduleService.getAllSchedule();
     }

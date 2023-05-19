@@ -23,7 +23,6 @@ public class InvoiceController {
     @Autowired
     private HttpServletResponse response;
 
-
     @GetMapping("/getAllInvoice")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<Invoice>> getAllInvoice() {
@@ -41,6 +40,7 @@ public class InvoiceController {
     }
 
     @PostMapping("/addBooking")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     public ResponseEntity<Invoice> addDataForBooking(@RequestParam(name = "film_code") Long filmCode, @RequestParam(name = "schedule_id") Long scheduleId, @RequestParam(name = "seat_id") Long seatId) throws Exception {
         try {
             Invoice addDataForBooking = invoiceService.addDataForBooking(filmCode, scheduleId, seatId);
