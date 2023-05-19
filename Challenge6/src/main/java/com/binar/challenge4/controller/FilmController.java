@@ -26,7 +26,6 @@ public class FilmController {
     }
 
     @GetMapping("/getAllFilm")
-    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     public ResponseEntity<List<Film>> getAllFilm() {
         List<Film> allFilm = filmService.getAllFilm();
         return ResponseEntity.ok(allFilm);
