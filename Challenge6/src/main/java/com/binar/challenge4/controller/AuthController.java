@@ -66,10 +66,16 @@ public class AuthController {
                         authenticationResponse.getJwt()));
     }
 
-    @PostMapping("/signup")
+    @PostMapping("/signup/user")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
         authService.registerUser(signUpRequest);
         return ResponseEntity.ok(new MessageResponse("User Registered Successful"));
+    }
+
+    @PostMapping("/signup/admin")
+    public ResponseEntity<?> registerAdmin(@Valid @RequestBody SignupRequest signUpRequest) {
+        authService.registerAdmin(signUpRequest);
+        return ResponseEntity.ok(new MessageResponse("Admin Registered Successful"));
     }
 
     @PostMapping("/signout")
