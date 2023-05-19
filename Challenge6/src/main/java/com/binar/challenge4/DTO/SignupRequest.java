@@ -1,4 +1,4 @@
-package com.binar.challenge4.Playload;
+package com.binar.challenge4.DTO;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
